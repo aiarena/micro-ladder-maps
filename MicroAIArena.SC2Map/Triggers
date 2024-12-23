@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TriggerData>
+    <Library Id="1">
+        <LibraryShareToMods/>
+        <Root>
+            <Item Type="CustomScript" Library="1" Id="F366C0F1"/>
+        </Root>
+        <Element Type="CustomScript" Id="F366C0F1">
+            <Identifier>Bootstrap</Identifier>
+            <ScriptCode>
+                include &quot;scripts/main&quot;
+            </ScriptCode>
+            <InitFunc>main</InitFunc>
+        </Element>
+    </Library>
+</TriggerData>

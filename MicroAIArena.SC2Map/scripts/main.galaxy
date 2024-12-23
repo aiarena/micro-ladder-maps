@@ -1,0 +1,19 @@
+
+include "scripts/util"
+include "scripts/flow"
+
+void main() {
+    // This function is invoked from MapScript.galaxy when the map
+    // first loads.
+
+    // We never touch MapScript.galaxy from vscode, because
+    // sc2edit will overwrite it any time you hit Save in sc2edit.
+
+    // You are free to add, delete, rename, and otherwise do whatever
+    // you want inside the scripts/ folder before tabbing back to
+    // sc2edit, hitting c-F12 to Compile and c-F9 to run.
+    err("Init main", c_playerAny);
+
+    initUtil();
+    initFlow();
+}

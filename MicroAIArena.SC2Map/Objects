@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PlacedObjects Version="27">
+    <ObjectPoint Id="1199237423" Position="52,28,0" Scale="1,1,1" Type="Normal" Name="Point 002" Color="0,0,0,0"/>
+    <ObjectPoint Id="1275209026" Position="20,28,0" Scale="1,1,1" Type="Normal" Name="Point 001" Color="0,0,0,0"/>
+    <ObjectPoint Id="804995931" Position="34.5,27.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 001" Color="0,0,0,0"/>
+    <ObjectPoint Id="1824696244" Position="34.5,27.5,0" Scale="1,1,1" Type="StartLoc" Name="Start Location 002" Color="0,0,0,0"/>
+    <ObjectUnit Id="1024488528" Position="35,27,0" Rotation="4.421" Scale="1,1,1" UnitType="CleaningBot">
+        <AIFlag Index="IsUseable" Value="0"/>
+    </ObjectUnit>
+</PlacedObjects>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="2">
+        <name value="DefenderLimitsRegion"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="23,17,49,39"/>
+        </shape>
+        <shape type="circle">
+            <center value="24,28"/>
+            <radius value="11"/>
+        </shape>
+        <shape type="circle">
+            <center value="48,28"/>
+            <radius value="11"/>
+        </shape>
+    </region>
+    <region id="1">
+        <name value="AttackerCenterRegion"/>
+        <shape type="rect">
+            <quad value="19,24,21,32"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="DefenderCenterRegion"/>
+        <shape type="rect">
+            <quad value="51,24,53,32"/>
+        </shape>
+    </region>
+    <region id="4">
+        <name value="DefenderSpawnArea"/>
+        <shape type="rect">
+            <quad value="50,25,54,31"/>
+        </shape>
+    </region>
+    <region id="5">
+        <name value="AttackerSpawnArea"/>
+        <shape type="rect">
+            <quad value="18,25,22,31"/>
+        </shape>
+    </region>
+</Regions>

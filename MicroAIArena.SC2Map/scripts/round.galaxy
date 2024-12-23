@@ -1,0 +1,522 @@
+// Should control match flow
+include "scripts/matchup"
+
+point lib1_gv_point1;
+point lib1_gv_point2;
+
+void initRound () {
+    lib1_gv_point1 = PointFromId(1275209026);
+    lib1_gv_point2 = PointFromId(1199237423);
+    initMatchup();
+}
+
+int lib1_gf_GetMatchupNumber (int currentRound) {
+    return ((currentRound - 1) / 2);
+}
+
+int lib1_gf_GetRoundAttackerSide (int currentRound) {
+    return ModI(currentRound, 2);
+}
+
+int lib1_gf_GetRoundAttackerId (int currentRound) {
+    return (1 + lib1_gf_GetRoundAttackerSide(currentRound));
+}
+
+int lib1_gf_GetRoundDefenderSide (int currentRound) {
+    return (1 - lib1_gf_GetRoundAttackerSide(currentRound));
+}
+
+int lib1_gf_GetRoundDefenderId (int currentRound) {
+    return (1 + lib1_gf_GetRoundDefenderSide(currentRound));
+}
+
+string lib1_gf_GetRandomRace () {
+    int autoDCC2CAA0_val;
+
+    autoDCC2CAA0_val = RandomInt(0, 2);
+    if (autoDCC2CAA0_val == 0) {
+        return "Prot";
+    }
+    else if (autoDCC2CAA0_val == 1) {
+        return "Terr";
+    }
+    else if (autoDCC2CAA0_val == 2) {
+        return "Zerg";
+    }
+    else {
+    }
+    return "Zerg";
+}
+
+void lib1_gf_SpawnUnits (int lp_tier, int currentRound) {
+    string lv_attackerRace;
+    string lv_defenderRace;
+
+    string auto48A142F2_val;
+    string autoCC8F8374_val;
+    string autoAFF9DB3B_val;
+    string autoBF91466E_val;
+    int auto28462AA1_val;
+    int auto92C3910A_val;
+    int autoF602511D_val;
+    string auto51822177_val;
+    int autoF5F2F666_val;
+    int auto8B87A3B5_val;
+    int auto19503D24_val;
+    string auto70A0C08C_val;
+    int autoF6D8AB1A_val;
+    int auto15F208C4_val;
+    int autoFC1069C8_val;
+    region attackerRegion;
+    region defenderRegion;
+    int attackerId = lib1_gf_GetRoundAttackerId(currentRound);
+    int defenderId = lib1_gf_GetRoundDefenderId(currentRound);
+
+    auto48A142F2_val = PlayerRace(attackerId);
+    if (auto48A142F2_val == "Prot") {
+        lv_attackerRace = "Prot";
+    }
+    else if (auto48A142F2_val == "Terr") {
+        lv_attackerRace = "Terr";
+    }
+    else if (auto48A142F2_val == "Zerg") {
+        lv_attackerRace = "Zerg";
+    }
+    else {
+        lv_attackerRace = lib1_gf_GetRandomRace();
+    }
+    autoCC8F8374_val = PlayerRace(defenderId);
+    if (autoCC8F8374_val == "Prot") {
+        lv_defenderRace = "Prot";
+    }
+    else if (autoCC8F8374_val == "Terr") {
+        lv_defenderRace = "Terr";
+    }
+    else if (autoCC8F8374_val == "Zerg") {
+        lv_defenderRace = "Zerg";
+    }
+    else {
+        lv_defenderRace = lib1_gf_GetRandomRace();
+    }
+    autoAFF9DB3B_val = lv_attackerRace;
+    if (autoAFF9DB3B_val == "Prot") {
+        autoBF91466E_val = lv_defenderRace;
+        if (autoBF91466E_val == "Prot") {
+            auto28462AA1_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (auto28462AA1_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvPT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvPT2R90(attackerId, defenderId);
+                }
+            }
+            else if (auto28462AA1_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvPT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvPT2R78(attackerId, defenderId);
+                }
+            }
+            else if (auto28462AA1_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvPT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvPT2R56(attackerId, defenderId);
+                }
+            }
+            else if (auto28462AA1_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvPT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvPT2R34(attackerId, defenderId);
+                }
+            }
+            else if (auto28462AA1_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvPT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvPT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_PvPT1R12(attackerId, defenderId);
+            }
+        }
+        else if (autoBF91466E_val == "Terr") {
+            auto92C3910A_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (auto92C3910A_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvTT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvTT2R90(attackerId, defenderId);
+                }
+            }
+            else if (auto92C3910A_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvTT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvTT2R78(attackerId, defenderId);
+                }
+            }
+            else if (auto92C3910A_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvTT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvTT2R56(attackerId, defenderId);
+                }
+            }
+            else if (auto92C3910A_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvTT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvTT2R34(attackerId, defenderId);
+                }
+            }
+            else if (auto92C3910A_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvTT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvTT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_PvTT1R12(attackerId, defenderId);
+            }
+        }
+        else if (autoBF91466E_val == "Zerg") {
+            autoF602511D_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (autoF602511D_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvZT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvZT2R90(attackerId, defenderId);
+                }
+            }
+            else if (autoF602511D_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvZT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvZT2R78(attackerId, defenderId);
+                }
+            }
+            else if (autoF602511D_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvZT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvZT2R56(attackerId, defenderId);
+                }
+            }
+            else if (autoF602511D_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvZT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvZT2R34(attackerId, defenderId);
+                }
+            }
+            else if (autoF602511D_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_PvZT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_PvZT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_PvZT1R12(attackerId, defenderId);
+            }
+        }
+        else {
+        }
+    }
+    else if (autoAFF9DB3B_val == "Terr") {
+        auto51822177_val = lv_defenderRace;
+        if (auto51822177_val == "Prot") {
+            autoF5F2F666_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (autoF5F2F666_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvPT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvPT2R90(attackerId, defenderId);
+                }
+            }
+            else if (autoF5F2F666_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvPT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvPT2R78(attackerId, defenderId);
+                }
+            }
+            else if (autoF5F2F666_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvPT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvPT2R56(attackerId, defenderId);
+                }
+            }
+            else if (autoF5F2F666_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvPT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvPT2R34(attackerId, defenderId);
+                }
+            }
+            else if (autoF5F2F666_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvPT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvPT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_TvPT1R12(attackerId, defenderId);
+            }
+        }
+        else if (auto51822177_val == "Terr") {
+            auto8B87A3B5_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (auto8B87A3B5_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvTT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvTT2R90(attackerId, defenderId);
+                }
+            }
+            else if (auto8B87A3B5_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvTT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvTT2R78(attackerId, defenderId);
+                }
+            }
+            else if (auto8B87A3B5_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvTT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvTT2R56(attackerId, defenderId);
+                }
+            }
+            else if (auto8B87A3B5_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvTT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvTT2R34(attackerId, defenderId);
+                }
+            }
+            else if (auto8B87A3B5_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvTT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvTT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_TvTT1R12(attackerId, defenderId);
+            }
+        }
+        else if (auto51822177_val == "Zerg") {
+            auto19503D24_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (auto19503D24_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvZT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvZT2R90(attackerId, defenderId);
+                }
+            }
+            else if (auto19503D24_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvZT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvZT2R78(attackerId, defenderId);
+                }
+            }
+            else if (auto19503D24_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvZT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvZT2R56(attackerId, defenderId);
+                }
+            }
+            else if (auto19503D24_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvZT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvZT2R34(attackerId, defenderId);
+                }
+            }
+            else if (auto19503D24_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_TvZT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_TvZT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_TvZT1R12(attackerId, defenderId);
+            }
+        }
+        else {
+        }
+    }
+    else if (autoAFF9DB3B_val == "Zerg") {
+        auto70A0C08C_val = lv_defenderRace;
+        if (auto70A0C08C_val == "Prot") {
+            autoF6D8AB1A_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (autoF6D8AB1A_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvPT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvPT2R90(attackerId, defenderId);
+                }
+            }
+            else if (autoF6D8AB1A_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvPT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvPT2R78(attackerId, defenderId);
+                }
+            }
+            else if (autoF6D8AB1A_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvPT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvPT2R56(attackerId, defenderId);
+                }
+            }
+            else if (autoF6D8AB1A_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvPT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvPT2R34(attackerId, defenderId);
+                }
+            }
+            else if (autoF6D8AB1A_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvPT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvPT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_ZvPT1R12(attackerId, defenderId);
+            }
+        }
+        else if (auto70A0C08C_val == "Terr") {
+            auto15F208C4_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (auto15F208C4_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvTT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvTT2R90(attackerId, defenderId);
+                }
+            }
+            else if (auto15F208C4_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvTT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvTT2R78(attackerId, defenderId);
+                }
+            }
+            else if (auto15F208C4_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvTT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvTT2R56(attackerId, defenderId);
+                }
+            }
+            else if (auto15F208C4_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvTT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvTT2R34(attackerId, defenderId);
+                }
+            }
+            else if (auto15F208C4_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvTT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvTT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_ZvTT1R12(attackerId, defenderId);
+            }
+        }
+        else if (auto70A0C08C_val == "Zerg") {
+            autoFC1069C8_val = lib1_gf_GetMatchupNumber(currentRound);
+            if (autoFC1069C8_val == 4) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvZT1R90(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvZT2R90(attackerId, defenderId);
+                }
+            }
+            else if (autoFC1069C8_val == 3) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvZT1R78(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvZT2R78(attackerId, defenderId);
+                }
+            }
+            else if (autoFC1069C8_val == 2) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvZT1R56(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvZT2R56(attackerId, defenderId);
+                }
+            }
+            else if (autoFC1069C8_val == 1) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvZT1R34(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvZT2R34(attackerId, defenderId);
+                }
+            }
+            else if (autoFC1069C8_val == 0) {
+                if (lp_tier == 1) {
+                    lib1_gf_ZvZT1R12(attackerId, defenderId);
+                } else if (lp_tier == 2) {
+                    lib1_gf_ZvZT2R12(attackerId, defenderId);
+                }
+            }
+            else {
+                lib1_gf_ZvZT1R12(attackerId, defenderId);
+            }
+        }
+    }
+}
+
+void lib1_gf_ClearTech () {
+    playergroup auto1C8344D7_g;
+    int auto1C8344D7_var;
+
+    CreepModify(lib1_gv_point1, 100.0, false, true);
+    auto1C8344D7_g = PlayerGroupAll();
+    auto1C8344D7_var = -1;
+    while (true) {
+        auto1C8344D7_var = PlayerGroupNextPlayer(auto1C8344D7_g, auto1C8344D7_var);
+        if (auto1C8344D7_var < 0) { break; }
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "Burrow", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "zerglingmovementspeed", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "GlialReconstitution", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "TunnelingClaws", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "EvolveMuscularAugments", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "EvolveGroovedSpines", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "NeuralParasite", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "Charge", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "BlinkTech", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "DarkTemplarBlinkUpgrade", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "PsiStormTech", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "Stimpack", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "ShieldWall", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "PunisherGrenades", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "HighCapacityBarrels", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "TerranInfantryWeaponsLevel2", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "TerranInfantryArmorsLevel2", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "InterferenceMatrix", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "LiberatorAGRangeUpgrade", 0);
+        libNtve_gf_SetUpgradeLevelForPlayer(auto1C8344D7_var, "PersonalCloaking", 0);
+    }
+}
+
+void moveCameras(int currentRound) {
+    CameraPan(lib1_gf_GetRoundAttackerId(currentRound), lib1_gv_point1, 0.1, -1, 10.0, false);
+    CameraPan(lib1_gf_GetRoundDefenderId(currentRound), lib1_gv_point2, 0.1, -1, 10.0, false);
+}

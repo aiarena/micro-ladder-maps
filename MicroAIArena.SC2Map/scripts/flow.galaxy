@@ -1,0 +1,315 @@
+include "TriggerLibs/NativeLib" //includes the basic libraries
+include "scripts/round" //includes the basic libraries
+
+timer lib1_gv_roundTimer;
+int lib1_gv_roundTimerWindow;
+bool lib1_gv_betweenRounds;
+int lib1_gv_leaderboard;
+int[3] lib1_gv_playerPoints;
+int lib1_gv_maxMatchups;
+int lib1_gv_currentTier;
+int lib1_gv_currentRound;
+
+trigger lib1_gt_InitializeRoundTimer;
+trigger lib1_gt_Transport1DOT;
+trigger lib1_gt_Transport2DOT;
+trigger lib1_gt_Leaderboard;
+trigger lib1_gt_GameStart;
+trigger lib1_gt_RoundTimerOver;
+trigger lib1_gt_RoundEndCheck;
+trigger lib1_gt_ExtendTimer;
+
+void lib1_InitVariables () {
+    lib1_gv_maxMatchups = 10;
+    lib1_gv_currentTier = 1;
+    lib1_gv_roundTimer = TimerCreate();
+    lib1_gv_roundTimerWindow = c_timerWindowNone;
+    lib1_gv_leaderboard = c_boardNone;
+}
+
+void lib1_gf_EndRound () {
+    const int autoF2F03856_ae = 1;
+    int autoF2F03856_var;
+
+    TimerWindowSetTitle(lib1_gv_roundTimerWindow, (PlayerName(1) + StringToText(" ") + IntToText(lib1_gv_playerPoints[0]) + StringToText(" vs ") + IntToText(lib1_gv_playerPoints[1]) + StringToText(" ") + PlayerName(2)));
+    autoF2F03856_var = 0;
+    for ( ; autoF2F03856_var <= autoF2F03856_ae; autoF2F03856_var += 1 ) {
+        BoardItemSetText(lib1_gv_leaderboard, 2, (autoF2F03856_var + 1), IntToText(lib1_gv_playerPoints[autoF2F03856_var]));
+    }
+    libNtve_gf_StopTimer(lib1_gv_roundTimer);
+    lib1_gf_KillAllUnits();
+    lib1_gf_ClearTech();
+}
+
+void lib1_gf_ResultScreen () {
+    if ((lib1_gv_playerPoints[0] == lib1_gv_playerPoints[1])) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringToText("TIE"));
+        Wait(5.0, c_timeGame);
+        GameOver(1, c_gameOverTie, true, true);
+        GameOver(2, c_gameOverTie, true, true);
+    }
+    else {
+        if ((lib1_gv_playerPoints[0] < lib1_gv_playerPoints[1])) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringToText("Winner"));
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, PlayerName(2));
+            Wait(5.0, c_timeGame);
+            GameOver(1, c_gameOverDefeat, true, true);
+            GameOver(2, c_gameOverVictory, true, true);
+        }
+        else {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringToText("Winner"));
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, PlayerName(1));
+            Wait(5.0, c_timeGame);
+            GameOver(1, c_gameOverVictory, true, true);
+            GameOver(2, c_gameOverDefeat, true, true);
+        }
+    }
+}
+
+void lib1_gf_StartRound () {
+    lib1_gv_currentRound = (lib1_gv_currentRound + 1);
+    if ((AbsI(lib1_gv_currentRound) <= lib1_gv_maxMatchups)) {
+        Wait(1.0, c_timeGame);
+        lib1_gf_MoveSpawningRegions();
+        moveCameras(lib1_gv_currentRound);
+
+        lib1_gf_SpawnUnits(1, lib1_gv_currentRound);
+        TimerStart(lib1_gv_roundTimer, 60.0, false, c_timeGame);
+        lib1_gv_betweenRounds = false;
+    }
+    else {
+        lib1_gf_ResultScreen();
+    }
+}
+
+bool lib1_gt_InitializeRoundTimer_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    TimerWindowCreate(lib1_gv_roundTimer, (PlayerName(1) + StringToText(" ") + IntToText(lib1_gv_playerPoints[0]) + StringToText(" vs ") + IntToText(lib1_gv_playerPoints[1]) + StringToText(" ") + PlayerName(2)), true, false);
+    lib1_gv_roundTimerWindow = TimerWindowLastCreated();
+    TimerWindowShow(lib1_gv_roundTimerWindow, PlayerGroupAll(), true);
+    return true;
+}
+
+void lib1_gt_InitializeRoundTimer_Init () {
+    lib1_gt_InitializeRoundTimer = TriggerCreate("lib1_gt_InitializeRoundTimer_Func");
+    TriggerAddEventMapInit(lib1_gt_InitializeRoundTimer);
+}
+
+bool lib1_gt_Transport1DOT_Func (bool testConds, bool runActions) {
+    unit lv_unitToDealDamage;
+
+    unitgroup autoDE139C3F_g;
+    int autoDE139C3F_u;
+
+    if (testConds) {
+        if (!((lib1_gv_betweenRounds == false))) {
+            return false;
+        }
+
+        if (!(((TimerGetRemaining(lib1_gv_roundTimer) <= 30.0) && (UnitGroupCount(UnitGroupFilter(null, c_playerAny, lib1_gv_playerUnitGroups[0], UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroupFilter(null, c_playerAny, lib1_gv_playerUnitGroups[0], UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) != UnitGroupCount(lib1_gv_playerUnitGroups[0], c_unitCountAlive))))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    autoDE139C3F_g = lib1_gv_playerTransportGroups[0];
+    autoDE139C3F_u = UnitGroupCount(autoDE139C3F_g, c_unitCountAll);
+    for (;; autoDE139C3F_u -= 1) {
+        lv_unitToDealDamage = UnitGroupUnitFromEnd(autoDE139C3F_g, autoDE139C3F_u);
+        if (lv_unitToDealDamage == null) { break; }
+        UnitDamage(UnitFromId(1024488528), "BurndownDamage", lv_unitToDealDamage, 1.0);
+    }
+    return true;
+}
+
+void lib1_gt_Transport1DOT_Init () {
+    lib1_gt_Transport1DOT = TriggerCreate("lib1_gt_Transport1DOT_Func");
+    TriggerAddEventTimePeriodic(lib1_gt_Transport1DOT, 0.1, c_timeGame);
+}
+
+bool lib1_gt_Transport2DOT_Func (bool testConds, bool runActions) {
+    unit lv_unitToDealDamage;
+
+    unitgroup autoA11EFCCA_g;
+    int autoA11EFCCA_u;
+
+    if (testConds) {
+        if (!((lib1_gv_betweenRounds == false))) {
+            return false;
+        }
+
+        if (!(((TimerGetRemaining(lib1_gv_roundTimer) <= 30.0) && (UnitGroupCount(UnitGroupFilter(null, c_playerAny, lib1_gv_playerUnitGroups[1], UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroupFilter(null, c_playerAny, lib1_gv_playerUnitGroups[1], UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), c_unitCountAlive) != UnitGroupCount(lib1_gv_playerUnitGroups[1], c_unitCountAlive))))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    autoA11EFCCA_g = lib1_gv_playerTransportGroups[1];
+    autoA11EFCCA_u = UnitGroupCount(autoA11EFCCA_g, c_unitCountAll);
+    for (;; autoA11EFCCA_u -= 1) {
+        lv_unitToDealDamage = UnitGroupUnitFromEnd(autoA11EFCCA_g, autoA11EFCCA_u);
+        if (lv_unitToDealDamage == null) { break; }
+        UnitDamage(UnitFromId(1024488528), "BurndownDamage", lv_unitToDealDamage, 1.0);
+    }
+    return true;
+}
+
+void lib1_gt_Transport2DOT_Init () {
+    lib1_gt_Transport2DOT = TriggerCreate("lib1_gt_Transport2DOT_Func");
+    TriggerAddEventTimePeriodic(lib1_gt_Transport2DOT, 0.1, c_timeGame);
+}
+
+bool lib1_gt_Leaderboard_Func (bool testConds, bool runActions) {
+    const int auto0AB02D44_ae = 2;
+    int auto0AB02D44_var;
+
+    if (!runActions) {
+        return true;
+    }
+
+    BoardCreate(2, 2, StringToText("Leaderboard"), Color(100.00, 100.00, 100.00));
+    lib1_gv_leaderboard = BoardLastCreated();
+    BoardItemSetText(lib1_gv_leaderboard, 1, c_boardRowHeader, StringToText("Player"));
+    BoardItemSetText(lib1_gv_leaderboard, 2, c_boardRowHeader, StringToText("Score"));
+    auto0AB02D44_var = 1;
+    for ( ; auto0AB02D44_var <= auto0AB02D44_ae; auto0AB02D44_var += 1 ) {
+        BoardPlayerAdd(lib1_gv_leaderboard, auto0AB02D44_var);
+        BoardItemSetTextColor(lib1_gv_leaderboard, 1, auto0AB02D44_var, libNtve_gf_ConvertPlayerColorToColor(PlayerGetColorIndex(auto0AB02D44_var, false)));
+        BoardItemSetText(lib1_gv_leaderboard, 1, auto0AB02D44_var, PlayerName(auto0AB02D44_var));
+        BoardItemSetTextColor(lib1_gv_leaderboard, 2, auto0AB02D44_var, libNtve_gf_ConvertPlayerColorToColor(PlayerGetColorIndex(auto0AB02D44_var, false)));
+        BoardItemSetText(lib1_gv_leaderboard, 2, auto0AB02D44_var, IntToText(0));
+    }
+    BoardMinimizeShow(lib1_gv_leaderboard, PlayerGroupActive(), false);
+    libNtve_gf_ShowHideLeaderboard(lib1_gv_leaderboard, true, PlayerGroupAll());
+    BoardSetState(lib1_gv_leaderboard, PlayerGroupAll(), c_boardStateShowing, true);
+    return true;
+}
+
+void lib1_gt_Leaderboard_Init () {
+    lib1_gt_Leaderboard = TriggerCreate("lib1_gt_Leaderboard_Func");
+    TriggerAddEventMapInit(lib1_gt_Leaderboard);
+}
+
+bool lib1_gt_GameStart_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        err("No action", -1);
+        return true;
+    }
+
+    VisEnable(c_visTypeFog, false);
+    VisEnable(c_visTypeMask, false);
+    lib1_gf_StartRound();
+    return true;
+}
+
+void lib1_gt_GameStart_Init () {
+    lib1_gt_GameStart = TriggerCreate("lib1_gt_GameStart_Func");
+    TriggerAddEventMapInit(lib1_gt_GameStart);
+}
+
+bool lib1_gt_RoundTimerOver_Func (bool testConds, bool runActions) {
+    int lv_winnerId;
+
+    if (testConds) {
+        if (!((lib1_gv_betweenRounds == false))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    lib1_gv_betweenRounds = true;
+    libNtve_gf_StopTimer(lib1_gv_roundTimer);
+    lv_winnerId = lib1_gf_GetRoundDefenderSide(lib1_gv_currentRound);
+    lib1_gv_playerPoints[lv_winnerId] += 1;
+    lib1_gf_EndRound();
+    lib1_gf_StartRound();
+    return true;
+}
+
+void lib1_gt_RoundTimerOver_Init () {
+    lib1_gt_RoundTimerOver = TriggerCreate("lib1_gt_RoundTimerOver_Func");
+    TriggerAddEventTimer(lib1_gt_RoundTimerOver, lib1_gv_roundTimer);
+}
+
+bool lib1_gt_RoundEndCheck_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!((((libNtve_gf_UnitGroupIsDead(lib1_gv_playerUnitGroups[0]) == true) || (libNtve_gf_UnitGroupIsDead(lib1_gv_playerUnitGroups[1]) == true)) && (lib1_gv_betweenRounds == false)))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    lib1_gv_betweenRounds = true;
+    if ((libNtve_gf_UnitGroupIsDead(lib1_gv_playerUnitGroups[1]) == true)) {
+        lib1_gf_KillPlayerUnits(2);
+        lib1_gv_playerPoints[0] += 1;
+    }
+
+    if ((libNtve_gf_UnitGroupIsDead(lib1_gv_playerUnitGroups[0]) == true)) {
+        lib1_gf_KillPlayerUnits(1);
+        lib1_gv_playerPoints[1] += 1;
+    }
+
+    Wait(1.0, c_timeGame);
+    lib1_gf_EndRound();
+    lib1_gf_StartRound();
+    return true;
+}
+
+
+void lib1_gt_RoundEndCheck_Init () {
+    lib1_gt_RoundEndCheck = TriggerCreate("lib1_gt_RoundEndCheck_Func");
+    TriggerAddEventUnitDied(lib1_gt_RoundEndCheck, null);
+}
+
+bool lib1_gt_ExtendTimer_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!(((UnitGetOwner(EventUnit()) != UnitGetOwner(libNtve_gf_KillingUnit())) && (lib1_gv_betweenRounds == false)))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    TimerRestart(lib1_gv_roundTimer);
+    return true;
+}
+
+void lib1_gt_ExtendTimer_Init () {
+    lib1_gt_ExtendTimer = TriggerCreate("lib1_gt_ExtendTimer_Func");
+    TriggerAddEventUnitDied(lib1_gt_ExtendTimer, null);
+}
+
+void lib1_InitTriggers () {
+    lib1_gt_InitializeRoundTimer_Init();
+    lib1_gt_Transport1DOT_Init();
+    lib1_gt_Transport2DOT_Init();
+    lib1_gt_Leaderboard_Init();
+    lib1_gt_GameStart_Init();
+    lib1_gt_RoundTimerOver_Init();
+    lib1_gt_RoundEndCheck_Init();
+    lib1_gt_ExtendTimer_Init();
+}
+
+void initFlow () {
+    err("Init flow", c_playerAny);
+    lib1_InitVariables();
+    lib1_InitTriggers();
+    initRound();
+}
