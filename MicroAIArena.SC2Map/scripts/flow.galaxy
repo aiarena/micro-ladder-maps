@@ -308,7 +308,6 @@ void lib1_InitTriggers () {
 }
 
 void initFlow () {
-    err("Init flow", c_playerAny);
     lib1_InitVariables();
     lib1_InitTriggers();
     initRound();

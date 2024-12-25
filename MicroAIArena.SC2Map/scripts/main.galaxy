@@ -12,8 +12,8 @@ void main() {
     // You are free to add, delete, rename, and otherwise do whatever
     // you want inside the scripts/ folder before tabbing back to
     // sc2edit, hitting c-F12 to Compile and c-F9 to run.
-    err("Init main", c_playerAny);
 
+    MeleeInitAI();
     initUtil();
     initFlow();
 }
