@@ -73,7 +73,7 @@ void lib1_gf_StartRound () {
         lib1_gf_MoveSpawningRegions();
         moveCameras(lib1_gv_currentRound);
 
-        lib1_gf_SpawnUnits(1, lib1_gv_currentRound);
+        lib1_gf_SpawnUnits(lib1_gv_currentTier, lib1_gv_currentRound);
         TimerStart(lib1_gv_roundTimer, 60.0, false, c_timeGame);
         lib1_gv_betweenRounds = false;
     }
