@@ -175,15 +175,14 @@ void lib1_gf_PvPT2R90 (int attackedId, int defenderId) {
 }
 
 void lib1_gf_PvTT1R12 (int attackedId, int defenderId) {
-    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 5, lib1_gv_attackerSpawnRegion, 0, true);
-    libNtve_gf_SetUpgradeLevelForPlayer(defenderId, "Stimpack", 1);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 4, lib1_gv_attackerSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(defenderId, "Marine", 13, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_PvTT1R34 (int attackedId, int defenderId) {
-    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 10, lib1_gv_attackerSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 12, lib1_gv_attackerSpawnRegion, 0, true);
     libNtve_gf_SetUpgradeLevelForPlayer(defenderId, "PunisherGrenades", 1);
-    lib1_gf_CreateUnitsInRegion(defenderId, "Marauder", 9, lib1_gv_defenderSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(defenderId, "Marauder", 11, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_PvTT1R56 (int attackedId, int defenderId) {
@@ -293,8 +292,8 @@ void lib1_gf_PvZT1R12 (int attackedId, int defenderId) {
 void lib1_gf_PvZT1R34 (int attackedId, int defenderId) {
     point regionCenter = RegionGetCenter(lib1_gv_attackerSpawnRegion);
     CreepModify(regionCenter, 100.0, true, true);
-    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 8, lib1_gv_attackerSpawnRegion, 0, true);
-    lib1_gf_CreateUnitsInRegion(defenderId, "Roach", 10, lib1_gv_defenderSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 10, lib1_gv_attackerSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(defenderId, "Roach", 12, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_PvZT1R56 (int attackedId, int defenderId) {
@@ -317,7 +316,7 @@ void lib1_gf_PvZT1R90 (int attackedId, int defenderId) {
     point regionCenter = RegionGetCenter(lib1_gv_attackerSpawnRegion);
     CreepModify(regionCenter, 100.0, true, true);
     libNtve_gf_SetUpgradeLevelForPlayer(attackedId, "BlinkTech", 1);
-    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 10, lib1_gv_attackerSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Stalker", 11, lib1_gv_attackerSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(defenderId, "Roach", 11, lib1_gv_defenderSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(defenderId, "Queen", 3, lib1_gv_defenderSpawnRegion, 100, true);
 }
@@ -392,9 +391,8 @@ void lib1_gf_PvZT2R90 (int attackedId, int defenderId) {
 }
 
 void lib1_gf_TvPT1R12 (int attackedId, int defenderId) {
-    libNtve_gf_SetUpgradeLevelForPlayer(attackedId, "Stimpack", 1);
     lib1_gf_CreateUnitsInRegion(attackedId, "Marine", 14, lib1_gv_attackerSpawnRegion, 0, true);
-    lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 5, lib1_gv_defenderSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 4, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_TvPT1R34 (int attackedId, int defenderId) {
@@ -628,7 +626,7 @@ void lib1_gf_TvZT1R56 (int attackedId, int defenderId) {
     libNtve_gf_SetUpgradeLevelForPlayer(attackedId, "PunisherGrenades", 1);
     lib1_gf_CreateUnitsInRegion(attackedId, "Marauder", 5, lib1_gv_attackerSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(defenderId, "Queen", 2, lib1_gv_defenderSpawnRegion, 100, true);
-    lib1_gf_CreateUnitsInRegion(defenderId, "Zergling", 15, lib1_gv_defenderSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(defenderId, "Zergling", 13, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_TvZT1R78 (int attackedId, int defenderId) {
@@ -728,8 +726,8 @@ void lib1_gf_ZvPT1R12 (int attackedId, int defenderId) {
 void lib1_gf_ZvPT1R34 (int attackedId, int defenderId) {
     point regionCenter = RegionGetCenter(lib1_gv_attackerSpawnRegion);
     CreepModify(regionCenter, 100.0, true, true);
-    lib1_gf_CreateUnitsInRegion(attackedId, "Roach", 9, lib1_gv_attackerSpawnRegion, 0, true);
-    lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 7, lib1_gv_defenderSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Roach", 11, lib1_gv_attackerSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 9, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_ZvPT1R56 (int attackedId, int defenderId) {
@@ -743,7 +741,7 @@ void lib1_gf_ZvPT1R56 (int attackedId, int defenderId) {
 void lib1_gf_ZvPT1R78 (int attackedId, int defenderId) {
     libNtve_gf_SetUpgradeLevelForPlayer(attackedId, "zerglingmovementspeed", 1);
     lib1_gf_CreateUnitsInRegion(attackedId, "Zergling", 14, lib1_gv_attackerSpawnRegion, 0, true);
-    lib1_gf_CreateUnitsInRegion(attackedId, "Roach", 6, lib1_gv_attackerSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Roach", 5, lib1_gv_attackerSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(defenderId, "Adept", 4, lib1_gv_defenderSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 4, lib1_gv_defenderSpawnRegion, 0, true);
 }
@@ -754,7 +752,7 @@ void lib1_gf_ZvPT1R90 (int attackedId, int defenderId) {
     libNtve_gf_SetUpgradeLevelForPlayer(defenderId, "BlinkTech", 1);
     lib1_gf_CreateUnitsInRegion(attackedId, "Roach", 11, lib1_gv_attackerSpawnRegion, 0, true);
     lib1_gf_CreateUnitsInRegion(attackedId, "Queen", 3, lib1_gv_attackerSpawnRegion, 150, true);
-    lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 10, lib1_gv_defenderSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(defenderId, "Stalker", 11, lib1_gv_defenderSpawnRegion, 0, true);
 }
 
 void lib1_gf_ZvPT2R12 (int attackedId, int defenderId) {
@@ -840,7 +838,7 @@ void lib1_gf_ZvTT1R56 (int attackedId, int defenderId) {
     point regionCenter = RegionGetCenter(lib1_gv_attackerSpawnRegion);
     CreepModify(regionCenter, 100.0, true, true);
     lib1_gf_CreateUnitsInRegion(attackedId, "Queen", 2, lib1_gv_attackerSpawnRegion, 100, true);
-    lib1_gf_CreateUnitsInRegion(attackedId, "Zergling", 16, lib1_gv_attackerSpawnRegion, 0, true);
+    lib1_gf_CreateUnitsInRegion(attackedId, "Zergling", 14, lib1_gv_attackerSpawnRegion, 0, true);
     libNtve_gf_SetUpgradeLevelForPlayer(defenderId, "PunisherGrenades", 1);
     lib1_gf_CreateUnitsInRegion(defenderId, "Marauder", 5, lib1_gv_defenderSpawnRegion, 0, true);
 }
