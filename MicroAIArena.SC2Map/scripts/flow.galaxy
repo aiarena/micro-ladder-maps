@@ -21,7 +21,7 @@ trigger lib1_gt_ExtendTimer;
 
 void lib1_InitVariables () {
     lib1_gv_maxMatchups = 10;
-    lib1_gv_currentTier = 1;
+    lib1_gv_currentTier = 2;
     lib1_gv_roundTimer = TimerCreate();
     lib1_gv_roundTimerWindow = c_timerWindowNone;
     lib1_gv_leaderboard = c_boardNone;
