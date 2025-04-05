@@ -21,7 +21,7 @@ trigger lib1_gt_ExtendTimer;
 
 void lib1_InitVariables () {
     lib1_gv_maxMatchups = 10;
-    lib1_gv_currentTier = 2;
+    lib1_gv_currentTier = 1;
     lib1_gv_roundTimer = TimerCreate();
     lib1_gv_roundTimerWindow = c_timerWindowNone;
     lib1_gv_leaderboard = c_boardNone;
@@ -69,7 +69,7 @@ void lib1_gf_ResultScreen () {
 void lib1_gf_StartRound () {
     lib1_gv_currentRound = (lib1_gv_currentRound + 1);
     if ((AbsI(lib1_gv_currentRound) <= lib1_gv_maxMatchups)) {
-        Wait(1.0, c_timeGame);
+        Wait(1.5, c_timeGame);
         lib1_gf_MoveSpawningRegions();
         moveCameras(lib1_gv_currentRound);
 
@@ -264,7 +264,7 @@ bool lib1_gt_RoundEndCheck_Func (bool testConds, bool runActions) {
         lib1_gv_playerPoints[1] += 1;
     }
 
-    Wait(1.0, c_timeGame);
+    Wait(1.5, c_timeGame);
     lib1_gf_EndRound();
     lib1_gf_StartRound();
     return true;
